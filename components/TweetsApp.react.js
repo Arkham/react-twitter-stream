@@ -13,7 +13,10 @@ module.exports = TweetsApp = React.createClass({
 
   render: function() {
     return (
-      <h1>Hello World MOM</h1>
+      <div className="tweets-app">
+        <h1>Hello World</h1>
+        <p>Tweets Count: {this.state.tweets.length}</p>
+      </div>
     );
   }
 });
