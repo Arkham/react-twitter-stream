@@ -25,7 +25,7 @@ module.exports = {
   },
 
   down: function(migration, DataTypes, done) {
-    migration.dropTable('tweets');
+    migration.dropTable('Tweets');
     done();
   }
 };
