@@ -10,13 +10,13 @@ module.exports = {
           primaryKey: true,
           autoIncrement: true
         },
-        twid: DataTypes.STRING,
+        tweetId: DataTypes.STRING,
         active: DataTypes.BOOLEAN,
         author: DataTypes.STRING,
         avatar: DataTypes.STRING,
         body: DataTypes.STRING,
         date: DataTypes.DATE,
-        screenname: DataTypes.STRING,
+        screenName: DataTypes.STRING,
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE
       }
