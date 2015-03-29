@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var Tweets = require('./Tweets.react');
 
 module.exports = TweetsApp = React.createClass({
   getInitialState: function(props) {
@@ -14,8 +15,7 @@ module.exports = TweetsApp = React.createClass({
   render: function() {
     return (
       <div className="tweets-app">
-        <h1>Hello World</h1>
-        <p>Tweets Count: {this.state.tweets.length}</p>
+        <Tweets tweets={this.state.tweets} />
       </div>
     );
   }

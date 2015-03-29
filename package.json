@@ -16,6 +16,7 @@
     "express": "^4.12.3",
     "express-handlebars": "^2.0.0",
     "node-jsx": "^0.12.4",
+    "normalize.css": "^3.0.2",
     "pg": "^4.3.0",
     "pg-hstore": "^2.3.1",
     "react": "^0.13.1",

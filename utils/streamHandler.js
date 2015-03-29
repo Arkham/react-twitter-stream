@@ -4,7 +4,7 @@ module.exports = function(stream, io) {
 
   stream.on('data', function(data) {
 
-    var tweet = Tweet.build({
+    var tweet = Tweet.create({
       tweetId: data.id,
       active: false,
       author: data.user.name,
@@ -12,8 +12,8 @@ module.exports = function(stream, io) {
       body: data.text,
       date: data.created_at,
       screenName: data.user.screen_name
+    }).then(function(tweet) {
+      io.emit('tweet', tweet);
     });
-
-    console.log(tweet.get('body'));
   });
 };
