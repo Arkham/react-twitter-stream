@@ -12,6 +12,7 @@
   "author": "Ju Liu",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^1.0.0",
     "express": "^4.12.3",
     "express-handlebars": "^2.0.0",
     "node-jsx": "^0.12.4",
