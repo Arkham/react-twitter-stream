@@ -22,6 +22,9 @@ app.disable('etag');
 // Index Route
 app.get('/', routes.index);
 
+// Page Route
+app.get('/page/:page/:skip', routes.page);
+
 // Set /public as our static content dir
 app.use("/", express.static(__dirname + "/public/"));
 

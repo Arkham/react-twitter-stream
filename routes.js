@@ -1,11 +1,11 @@
-var JSX = require('node-jsx').install(),
+var JSX = require('node-jsx').install({harmony: true}),
   React = require('react'),
   TweetsApp = require('./components/TweetsApp.react'),
   Tweet = require('./models/Tweet');
 
 module.exports = {
   index: function(req, res) {
-    Tweet.findAll().then(function(tweets) {
+    Tweet.getTweets().then(function(tweets) {
       var markup = React.renderToString(
         React.createElement(TweetsApp, { tweets: tweets })
       );
@@ -15,5 +15,14 @@ module.exports = {
         state: JSON.stringify(tweets)
       });
     })
+  },
+
+  page: function(req, res) {
+    Tweet.getTweets({
+      page: req.params.page,
+      skip: req.params.skip
+    }).then(function(tweets) {
+      res.send(tweets);
+    });
   }
 }
