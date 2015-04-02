@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var moment = require('moment');
 
 module.exports = Tweets = React.createClass({
   render: function() {
@@ -12,7 +13,7 @@ module.exports = Tweets = React.createClass({
           </div>
           <div className="tweet-content">
             <h2>{tweet.author}</h2>
-            <span>@{tweet.screenName}</span>
+            <span>@{tweet.screenName} - {moment(tweet.date).fromNow()}</span>
             <p>{tweet.body}</p>
           </div>
         </li>
