@@ -5,6 +5,7 @@ require('dotenv').load();
 var express = require('express'),
   exphbs = require('express-handlebars'),
   http = require('http'),
+  request = require('request'),
   twitter = require('twitter'),
   routes = require('./routes'),
   config = require('./config'),
@@ -12,7 +13,11 @@ var express = require('express'),
 
 // Create an express instance and set a port variable
 var app = express();
-var port = process.env.PORT || 8080;
+var port = 8080;
+
+// Setup livereload
+app.use(require('connect-livereload')({ port: 35729 }));
+request('http://localhost:35729/changed?files=js/bundle.js');
 
 // Set handlebars as the templating engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main'}));
