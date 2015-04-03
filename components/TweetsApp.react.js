@@ -2,9 +2,10 @@
 
 var React = require('react');
 var Tweets = require('./Tweets.react');
+var Loader = require('./Loader.react');
 var request = require('superagent');
 
-module.exports = TweetsApp = React.createClass({
+module.exports = React.createClass({
   getInitialState: function(props) {
     props = props || this.props;
 
@@ -51,23 +52,29 @@ module.exports = TweetsApp = React.createClass({
   },
 
   loadPagedTweets: function(tweets) {
-    if (tweets.length) {
-      var updated = this.state.tweets;
+    var self = this;
 
-      tweets.forEach(function(tweet) {
-        updated.push(tweet);
-      });
+    // Make everything slower so we can see the loader
+    setTimeout(function(){
+      if (tweets.length) {
+        var updated = self.state.tweets;
 
-      this.setState({tweets: updated, paging: false});
-    } else {
-      this.setState({done: true, paging: false});
-    }
+        tweets.forEach(function(tweet) {
+          updated.push(tweet);
+        });
+
+        self.setState({tweets: updated, paging: false});
+      } else {
+        self.setState({done: true, paging: false});
+      }
+    }, 1000);
   },
 
   render: function() {
     return (
       <div className="tweets-app">
         <Tweets tweets={this.state.tweets} />
+        <Loader paging={this.state.paging} />
       </div>
     );
   }
