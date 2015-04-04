@@ -4,6 +4,7 @@ var React = require('react');
 var request = require('superagent');
 var Tweets = require('./Tweets.react');
 var Loader = require('./Loader.react');
+var NotificationBar = require('./NotificationBar.react');
 
 module.exports = React.createClass({
   getInitialState: function(props) {
@@ -11,24 +12,12 @@ module.exports = React.createClass({
 
     return {
       tweets: props.tweets,
-      count: 0,
+      unreadCount: 0,
       page: 0,
       skip: 0,
       paging: false,
       done: false
     }
-  },
-
-  addTweet: function(tweet) {
-    var newTweets = this.state.tweets;
-
-    newTweets.unshift(tweet);
-
-    this.setState({
-      tweets: newTweets,
-      count: this.state.count + 1,
-      skip: this.state.skip + 1
-    });
   },
 
   componentWillReceiveProps: function(newProps, oldProps) {
@@ -45,6 +34,18 @@ module.exports = React.createClass({
     });
 
     window.addEventListener('scroll', this.checkWindowScroll);
+  },
+
+  addTweet: function(tweet) {
+    var newTweets = this.state.tweets;
+
+    newTweets.unshift(tweet);
+
+    this.setState({
+      tweets: newTweets,
+      unreadCount: this.state.unreadCount + 1,
+      skip: this.state.skip + 1
+    });
   },
 
   checkWindowScroll: function() {
@@ -90,11 +91,22 @@ module.exports = React.createClass({
     }
   },
 
+  showNewTweets: function() {
+    var updated = this.state.tweets;
+
+    updated.forEach(function(tweet) {
+      tweet.active = true;
+    });
+
+    this.setState({tweets: updated, unreadCount: 0});
+  },
+
   render: function() {
     return (
       <div className="tweets-app">
         <Tweets tweets={this.state.tweets} />
         <Loader paging={this.state.paging} />
+        <NotificationBar count={this.state.unreadCount} onShowNewTweets={this.showNewTweets} />
       </div>
     );
   }

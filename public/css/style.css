@@ -1,6 +1,6 @@
 body {
   background: #2C3E50;
-  padding: 40px;
+  padding: 20px 0;
 }
 
 .tweets-app ul {
@@ -15,8 +15,14 @@ body {
   border-bottom: 1px solid #ddd;
   box-shadow: 0 1px 0 white;
   font-weight: 300;
-  margin-bottom: 20px;
   padding: 20px;
+  display: none;
+  margin: 0;
+}
+
+.tweet.active {
+  display: block;
+  margin: 20px 0;
 }
 
 .tweet:after {
@@ -66,4 +72,27 @@ body {
 .loader.active img {
   max-height: 50px;
   margin: 20px auto;
+}
+
+.notification-bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: none;
+
+  background-color: rgba(241, 196, 15,.9);
+  padding: 5px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+
+.notification-bar.active {
+  display: block;
+}
+
+.notification-bar a {
+  color: white;
+  font-weight: bold;
 }
