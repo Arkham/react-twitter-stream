@@ -5,7 +5,7 @@ var JSX = require('node-jsx').install({harmony: true}),
 
 module.exports = {
   index: function(req, res) {
-    Tweet.getTweets().then(function(tweets) {
+    Tweet.getTweets({page: 0}, function(tweets) {
       var markup = React.renderToString(
         React.createElement(TweetsApp, { tweets: tweets })
       );
@@ -21,7 +21,7 @@ module.exports = {
     Tweet.getTweets({
       page: req.params.page,
       skip: req.params.skip
-    }).then(function(tweets) {
+    }, function(tweets) {
       res.send(tweets);
     });
   }

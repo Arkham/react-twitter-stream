@@ -13,7 +13,7 @@ var Tweet = sequelize.define('Tweet', {
 
 Tweet.perPage = 10;
 
-Tweet.getTweets = function(options) {
+Tweet.getTweets = function(options, callback) {
   options = options || {};
 
   var perPage = parseInt(options.perPage)  || Tweet.perPage;
@@ -21,10 +21,16 @@ Tweet.getTweets = function(options) {
   var skip    = parseInt(options.skip, 10) || 0;
   var offset = page * perPage + skip;
 
-  return Tweet.findAll({
+  Tweet.findAll({
     offset: offset,
     limit: perPage,
     order: "date DESC"
+  }).then(function(tweets) {
+    tweets.forEach(function(tweet) {
+      tweet.active = true;
+    });
+
+    callback(tweets);
   });
 };
 

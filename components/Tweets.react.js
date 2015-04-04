@@ -7,7 +7,7 @@ module.exports = Tweets = React.createClass({
   render: function() {
     var tweets = this.props.tweets.map(function(tweet) {
       return (
-        <li key={tweet.id} className="tweet">
+        <li key={tweet.id} className={"tweet " + (tweet.active ? 'active' : '')}>
           <div className="tweet-image">
             <img src={tweet.avatar} />
           </div>
