@@ -1,9 +1,9 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var request = require('superagent');
 var Tweets = require('./Tweets.react');
 var Loader = require('./Loader.react');
-var request = require('superagent');
 
 module.exports = React.createClass({
   getInitialState: function(props) {
@@ -19,11 +19,31 @@ module.exports = React.createClass({
     }
   },
 
+  addTweet: function(tweet) {
+    var newTweets = this.state.tweets;
+
+    newTweets.unshift(tweet);
+
+    this.setState({
+      tweets: newTweets,
+      count: this.state.count + 1,
+      skip: this.state.skip + 1
+    });
+  },
+
   componentWillReceiveProps: function(newProps, oldProps) {
     this.setState(this.getInitialState(newProps));
   },
 
   componentDidMount: function() {
+    var self = this;
+
+    var socket = require('socket.io-client').connect();
+
+    socket.on('tweet', function(data) {
+      self.addTweet(data);
+    });
+
     window.addEventListener('scroll', this.checkWindowScroll);
   },
 
@@ -54,20 +74,20 @@ module.exports = React.createClass({
   loadPagedTweets: function(tweets) {
     var self = this;
 
-    // Make everything slower so we can see the loader
-    setTimeout(function(){
-      if (tweets.length) {
-        var updated = self.state.tweets;
+    if (tweets.length) {
+      var updated = self.state.tweets;
 
-        tweets.forEach(function(tweet) {
-          updated.push(tweet);
-        });
+      tweets.forEach(function(tweet) {
+        updated.push(tweet);
+      });
 
+      // Make everything slower so we can see the loader
+      setTimeout(function(){
         self.setState({tweets: updated, paging: false});
-      } else {
-        self.setState({done: true, paging: false});
-      }
-    }, 1000);
+      }, 1000);
+    } else {
+      self.setState({done: true, paging: false});
+    }
   },
 
   render: function() {
